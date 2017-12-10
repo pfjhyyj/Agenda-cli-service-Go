@@ -46,10 +46,6 @@ Agenda API
 
 + Response 401 (application/json)
 
-        {
-            "msg": "incorrent username and password combination"
-        }
-
 ### Logout [POST /api/user/logout]
 
 + Response 200 (application/json)
@@ -82,10 +78,6 @@ Agenda API
             
 + Response 401 (application/json)
 
-        {
-            "msg": "Not logined"
-        }
-
 ### Show User Detail  [GET /api/user/query{?username}]
 
 + Parameters
@@ -100,11 +92,6 @@ Agenda API
         }
 
 + Response 401 (application/json)
-
-        {
-            "msg": "Not logined"
-        }
-
 
 ## Group Users [/api/users]
 
@@ -121,7 +108,7 @@ Agenda API
                 "phone": "12345678909"
             }
 
-+ Response 200 (application/json)
++ Response 201 (application/json)
 
     + Header
 
@@ -152,7 +139,7 @@ Agenda API
                 "endTime": "2017-01-02/12:00:00"
             }
             
-+ Response 200 (application/json)
++ Response 201 (application/json)
 
     + Header
 
@@ -163,10 +150,6 @@ Agenda API
             {}
             
 + Response 401 (application/json)
-
-        {
-            "msg": "Not logined"
-        }
         
 ### Add Participator [POST /api/meeting/add-participator]
 
@@ -191,11 +174,6 @@ Agenda API
             
 + Response 401 (application/json)
 
-        {
-            "msg": "Not logined"
-        }
-        
-        
 ### Delete Participator [DELETE /api/meeting/delete-participator]
 
 + Request (application/json)
@@ -218,11 +196,7 @@ Agenda API
             {}
             
 + Response 401 (application/json)
-
-        {
-            "msg": "Not logined"
-        }
-        
+   
 ### Show Meetings By Time [GET /api/meeting/query{?startTime,endTime}]
 
 + Parameters
@@ -251,10 +225,6 @@ Agenda API
         
 + Response 401 (application/json)
 
-        {
-            "msg": "Not logined"
-        }
-        
 ### Show All Meetings [GET /api/meeting]
 
 + Response 200 (application/json)
@@ -273,10 +243,6 @@ Agenda API
             
 + Response 401 (application/json)
 
-        {
-            "msg": "Not logined"
-        }
-        
 ### Cancel Meeting [DELETE /api/meeting]
 
 + Request
@@ -299,10 +265,6 @@ Agenda API
             
 + Response 401 (application/json)
 
-        {
-            "msg": "Not Your Meeting"
-        }
-
 ### Quit Meeting [DELETE /api/meeting/quit-meeting]
 
 + Request
@@ -324,7 +286,3 @@ Agenda API
             {}
             
 + Response 401 (application/json)
-
-        {
-            "msg": "Not logined"
-        }
