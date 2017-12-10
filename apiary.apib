@@ -99,13 +99,11 @@ Agenda API
 
 + Response 200 (application/json)
             
-        {
-            [
-                {"username": "test1"},
-                {"username": "test2"},
-                {"username": "test3"}
-            ]
-        }
+        [
+            {"username": "test1"},
+            {"username": "test2"},
+            {"username": "test3"}
+        ]
             
 + Response 401 (application/json)
 
@@ -124,9 +122,14 @@ Agenda API
 
 + Response 401 (application/json)
 
-## Group Meeting [/api/meeting]
++ Response 404 (application/json)
 
-### Add Meeting [POST /api/meeting]
+        {}
+        
+
+## Group Meetings [/api/meetings]
+
+### Add Meeting [POST /api/meetings]
 
 + Request (application/json)
 
@@ -143,22 +146,27 @@ Agenda API
 
     + Header
 
-            Location: /api/meeting/list
+            Location: /api/meetings
 
     + Body
 
             {}
             
-+ Response 401 (application/json)
++ Response 400 (application/json)
+
+        {
+            "msg": "bad title"
+        }
         
-### Add Participator [POST /api/meeting/add-participator]
++ Response 401 (application/json)
+
+### Add Participator [POST /api/meetings/{title}/participators]
 
 + Request (application/json)
 
     + Body
         
             {
-                "title": "meeting",
                 "participator": "test2"
             }
             
@@ -171,17 +179,34 @@ Agenda API
     + Body
 
             {}
-            
+
++ Response 400 (application/json)
+
+        {
+            "msg": "user will be having another meeting to participate"
+        }
+
 + Response 401 (application/json)
 
-### Delete Participator [DELETE /api/meeting/delete-participator]
++ Response 403 (application/json)
+
+        {
+            "msg": "You are not the sponsor"
+        }
+
++ Response 404 (application/json)
+
+        {
+            "msg": "meeting/participator not found"
+        }
+
+### Delete Participator [DELETE /api/meetings/{title}/participators]
 
 + Request (application/json)
 
     + Body
         
             {
-                "title": "meeting",
                 "participator": "test2"
             }
             
@@ -194,18 +219,22 @@ Agenda API
     + Body
 
             {}
-            
+
 + Response 401 (application/json)
 
-### Cancel Meeting [DELETE /api/meeting]
++ Response 403 (application/json)
 
-+ Request
+        {
+            "msg": "You are not the sponsor"
+        }
 
-    + Body
-        
-            {
-                "title": "meeting"
-            }
++ Response 404 (application/json)
+
+        {
+            "msg": "meeting/participator not found"
+        }
+
+### Cancel Meeting [DELETE /api/meetings/{title}]
 
 + Response 200 (application/json)
 
@@ -219,15 +248,19 @@ Agenda API
             
 + Response 401 (application/json)
 
-### Quit Meeting [DELETE /api/meeting/quit-meeting]
++ Response 403 (application/json)
 
-+ Request
+        {
+            "msg": "You are not the sponsor"
+        }
 
-    + Body
-        
-            {
-                "title": "meeting"
-            }
++ Response 404 (application/json)
+
+        {
+            "msg": "meeting not found"
+        }
+
+### Quit Meeting [DELETE /api/meetings/{title}/participator/self]
 
 + Response 200 (application/json)
 
@@ -241,9 +274,13 @@ Agenda API
             
 + Response 401 (application/json)
 
-## Group Meetings [/api/meetings]
++ Response 404 (application/json)
 
-### Show Meetings By Time [GET /api/meetings/{?startTime,endTime}]
+        {
+            "msg": "meeting not found"
+        }
+
+### Show Meetings By Time [GET /api/meetings{?startTime,endTime}]
 
 + Parameters
     - startTime : `2017-01-01/12:00:00` (string, required) - Start Time
@@ -251,23 +288,18 @@ Agenda API
 
 + Response 200 (application/json)
 
-        {
-            [
-                {
-                    "title": "meeting",
-                    "participator": "test1",
-                    "startTime": "2017-01-01/12:00:00",
-                    "endTime": "2017-01-02/12:00:00"
-                }
-            ]
-            
-        }
+        [
+            {
+                "title": "meeting",
+                "participator": "test1",
+                "startTime": "2017-01-01/12:00:00",
+                "endTime": "2017-01-02/12:00:00"
+            }
+        ]
             
 + Response 400 (application/json)
 
-        {
-            "msg": "Bad time"
-        }
+        []
         
 + Response 401 (application/json)
 
@@ -275,16 +307,13 @@ Agenda API
 
 + Response 200 (application/json)
 
-        {
-            [
-                {
-                    "title": "meeting",
-                    "participator": "test1",
-                    "startTime": "2017-01-01/12:00:00",
-                    "endTime": "2017-01-02/12:00:00"
-                }
-            ]
-            
-        }
+        [
+            {
+                "title": "meeting",
+                "participator": "test1",
+                "startTime": "2017-01-01/12:00:00",
+                "endTime": "2017-01-02/12:00:00"
+            }
+        ]
             
 + Response 401 (application/json)
