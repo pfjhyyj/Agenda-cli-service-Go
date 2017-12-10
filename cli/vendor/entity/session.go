@@ -75,7 +75,7 @@ func (model *sessionModel) dump() {
 
 // Login performs login request
 func Login(username string, password string) (openid string, err error) {
-	logger.Println("[sessionEntity] try performing login request with username = ", username)
+	logger.Println("[sessionentity] try performing login request with username = ", username)
 	reqBody := struct {
 		Username string `json:"username"`
 		Password string `json:"password"`
@@ -100,7 +100,7 @@ func Login(username string, password string) (openid string, err error) {
 
 // Logout performs logout request
 func Logout() (err error) {
-	logger.Println("[sessionEntity] try performing logout request")
+	logger.Println("[sessionentity] try performing logout request")
 	var code int
 	if code, err = request("POST", "/api/user/logout", nil, nil); err != nil {
 		return
@@ -114,7 +114,7 @@ func Logout() (err error) {
 
 // GetCurUsername performs request to fetch the username associated with current session
 func GetCurUsername() (username string, err error) {
-	logger.Println("[sessionEntity] try performing request for whether current session is logged in")
+	logger.Println("[sessionentity] try performing request for whether current session is logged in")
 	var body struct {
 		Username string `json:"username"`
 	}

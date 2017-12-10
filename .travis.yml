@@ -13,3 +13,5 @@ script:
   - export MOCK= && go test -v ./cli/vendor/service
   - go test -v ./service/vendor/entities
   - docker build . -t agenda
+  - docker run -dit --name service -v /data:/data -p 8080:8080 agenda service
+  - docker run --rm --network host agenda -v /data:/data agenda cli register -u agenda -p agenda -m agenda@service.computing.com -n 12345678909
