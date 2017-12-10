@@ -11,7 +11,7 @@ docker build . -t agenda
 # 服务端
 docker run -dit --name agenda-sevice -v $PATH_TO_SERVER_DATA:/data -p 8080:8080 agenda service
 # 客户端
-docker run --rm --network host agenda -v $PATH_TO_CLI_DATA:/data agenda cli help
+docker run --rm --network host -v $PATH_TO_CLI_DATA:/data agenda cli help
 ```
 
 ## 注意
