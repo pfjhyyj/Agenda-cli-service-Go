@@ -1,0 +1,94 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# Agenda API
+
+Agenda API
+
+## Group User [/api/user]
+
+### Is Logged in [GET /api/user/login{?openid}]
+
++ Parameters
+    - openid : `abcdefg` (string, required) - Open ID
+
++ Response 200 (application/json)
+
+        {
+            "username": "admin"
+        }
+
++ Response 401 (application/json)
+
+### Login [POST /api/user/login]
+
++ Request (application/json)
+
+        {
+            "username": "admin",
+            "password": "agenda"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "openid": "abcdefg",
+            "msg": "Logged in successfully"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "msg": "You have logged in as admin"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "msg": "incorrent username and password combination"
+        }
+
+### Logout [POST /api/user/logout]
+
++ Response 200 (application/json)
+
+    + Header
+
+            Location: /api/user/login
+
+### Delete Account [DELETE /api/user/self]
+
++ Response 200 (application/json)
+
+    + Header
+
+            Location: /api/user/login
+
++ Response 401 (application/json)
+
+## Group Users [/api/users]
+
+### Register [POST]
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "username": "admin",
+                "password": "agenda",
+                "email": "computing@service.com",
+                "phone": "12345678909"
+            }
+
++ Response 200 (application/json)
+
+    + Header
+
+            Location: /api/user/login
+
++ Response 400 (application/json)
+
+        {
+            "msg": "bad username"
+        }

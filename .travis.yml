@@ -1,0 +1,15 @@
+language: go
+
+go:
+  - 1.8
+  - master
+
+sudo: required
+
+services:
+  - docker
+
+script:
+  - export MOCK= && go test -v ./cli/vendor/service
+  - go test -v ./service/vendor/entities
+  - docker build . -t agenda
