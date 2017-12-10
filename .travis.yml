@@ -14,4 +14,4 @@ script:
   - go test -v ./service/vendor/entities
   - docker build . -t agenda
   - docker run -dit --name service -p 8080:8080 -v /data:/data agenda service
-  - docker run --rm --network host -v /data:/data agenda cli register -u agenda -p agenda -m agenda@service.computing.com -n 12345678909
+  - docker run --rm --network host -v /data:/data agenda cli help
