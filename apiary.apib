@@ -20,6 +20,8 @@ Agenda API
 
 + Response 401 (application/json)
 
+        {}
+
 ### Login [POST /api/user/login]
 
 + Request (application/json)
@@ -66,6 +68,44 @@ Agenda API
 
 + Response 401 (application/json)
 
+### Show User List [GET /api/user/list]
+
++ Response 200 (application/json)
+            
+        {
+            "data": [
+                {"username": "test1"},
+                {"username": "test2"},
+                {"username": "test3"}
+            ]
+        }
+            
++ Response 401 (application/json)
+
+        {
+            "msg": "Not logined"
+        }
+
+### Show User Detail  [GET /api/user/query{?username}]
+
++ Parameters
+    - username : `test1` (string, required) - Username
+
++ Response 200 (application)
+    
+        {
+            "username": "test1",
+            "email": "test1@qq.com",
+            "phone": "12344566"
+        }
+
++ Response 401 (application/json)
+
+        {
+            "msg": "Not logined"
+        }
+
+
 ## Group Users [/api/users]
 
 ### Register [POST]
@@ -86,9 +126,205 @@ Agenda API
     + Header
 
             Location: /api/user/login
+            
+    + Body
+    
+            {}
 
 + Response 400 (application/json)
 
         {
             "msg": "bad username"
+        }
+
+## Group Meeting [/api/meeting]
+
+### Add Meeting [POST /api/meeting]
+
++ Request (application/json)
+
+    + Body
+    
+            {
+                "title": "meeting",
+                "participator": "test1",
+                "startTime": "2017-01-01/12:00:00",
+                "endTime": "2017-01-02/12:00:00"
+            }
+            
++ Response 200 (application/json)
+
+    + Header
+
+            Location: /api/meeting/list
+
+    + Body
+
+            {}
+            
++ Response 401 (application/json)
+
+        {
+            "msg": "Not logined"
+        }
+        
+### Add Participator [POST /api/meeting/add-participator]
+
++ Request (application/json)
+
+    + Body
+        
+            {
+                "title": "meeting",
+                "participator": "test2"
+            }
+            
++ Response 200 (application/json)
+
+    + Header
+
+            Location: /api/meeting/list
+
+    + Body
+
+            {}
+            
++ Response 401 (application/json)
+
+        {
+            "msg": "Not logined"
+        }
+        
+        
+### Delete Participator [DELETE /api/meeting/delete-participator]
+
++ Request (application/json)
+
+    + Body
+        
+            {
+                "title": "meeting",
+                "participator": "test2"
+            }
+            
++ Response 200 (application/json)
+
+    + Header
+
+            Location: /api/meeting
+
+    + Body
+
+            {}
+            
++ Response 401 (application/json)
+
+        {
+            "msg": "Not logined"
+        }
+        
+### Show Meetings By Time [GET /api/meeting/query{?startTime,endTime}]
+
++ Parameters
+    - startTime : `2017-01-01/12:00:00` (string, required) - Start Time
+    - endTime : `2017-01-02/12:00:00` (string, required) - End Time
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "title": "meeting",
+                    "participator": "test1",
+                    "startTime": "2017-01-01/12:00:00",
+                    "endTime": "2017-01-02/12:00:00"
+                }
+            ]
+            
+        }
+            
++ Response 400 (application/json)
+
+        {
+            "msg": "Bad time"
+        }
+        
++ Response 401 (application/json)
+
+        {
+            "msg": "Not logined"
+        }
+        
+### Show All Meetings [GET /api/meeting]
+
++ Response 200 (application/json)
+
+        {
+            "data": [
+                {
+                    "title": "meeting",
+                    "participator": "test1",
+                    "startTime": "2017-01-01/12:00:00",
+                    "endTime": "2017-01-02/12:00:00"
+                }
+            ]
+            
+        }
+            
++ Response 401 (application/json)
+
+        {
+            "msg": "Not logined"
+        }
+        
+### Cancel Meeting [DELETE /api/meeting]
+
++ Request
+
+    + Body
+        
+            {
+                "title": "meeting"
+            }
+
++ Response 200 (application/json)
+
+    + Header
+    
+            Location: /api/meeting
+    
+    + Body
+    
+            {}
+            
++ Response 401 (application/json)
+
+        {
+            "msg": "Not Your Meeting"
+        }
+
+### Quit Meeting [DELETE /api/meeting/quit-meeting]
+
++ Request
+
+    + Body
+        
+            {
+                "title": "meeting"
+            }
+
++ Response 200 (application/json)
+
+    + Header
+    
+            Location: /api/meeting
+    
+    + Body
+    
+            {}
+            
++ Response 401 (application/json)
+
+        {
+            "msg": "Not logined"
         }
