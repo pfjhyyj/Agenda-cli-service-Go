@@ -64,35 +64,6 @@ Agenda API
 
 + Response 401 (application/json)
 
-### Show User List [GET /api/user/list]
-
-+ Response 200 (application/json)
-            
-        {
-            "data": [
-                {"username": "test1"},
-                {"username": "test2"},
-                {"username": "test3"}
-            ]
-        }
-            
-+ Response 401 (application/json)
-
-### Show User Detail  [GET /api/user/query{?username}]
-
-+ Parameters
-    - username : `test1` (string, required) - Username
-
-+ Response 200 (application)
-    
-        {
-            "username": "test1",
-            "email": "test1@qq.com",
-            "phone": "12344566"
-        }
-
-+ Response 401 (application/json)
-
 ## Group Users [/api/users]
 
 ### Register [POST]
@@ -123,6 +94,35 @@ Agenda API
         {
             "msg": "bad username"
         }
+        
+### Show User List [GET /api/users]
+
++ Response 200 (application/json)
+            
+        {
+            [
+                {"username": "test1"},
+                {"username": "test2"},
+                {"username": "test3"}
+            ]
+        }
+            
++ Response 401 (application/json)
+
+### Show User Detail  [GET /api/users/{username}]
+
++ Parameters
+    - username : `test1` (string, required) - Username
+
++ Response 200 (application)
+    
+        {
+            "username": "test1",
+            "email": "test1@qq.com",
+            "phone": "12344566"
+        }
+
++ Response 401 (application/json)
 
 ## Group Meeting [/api/meeting]
 
@@ -196,52 +196,6 @@ Agenda API
             {}
             
 + Response 401 (application/json)
-   
-### Show Meetings By Time [GET /api/meeting/query{?startTime,endTime}]
-
-+ Parameters
-    - startTime : `2017-01-01/12:00:00` (string, required) - Start Time
-    - endTime : `2017-01-02/12:00:00` (string, required) - End Time
-
-+ Response 200 (application/json)
-
-        {
-            "data": [
-                {
-                    "title": "meeting",
-                    "participator": "test1",
-                    "startTime": "2017-01-01/12:00:00",
-                    "endTime": "2017-01-02/12:00:00"
-                }
-            ]
-            
-        }
-            
-+ Response 400 (application/json)
-
-        {
-            "msg": "Bad time"
-        }
-        
-+ Response 401 (application/json)
-
-### Show All Meetings [GET /api/meeting]
-
-+ Response 200 (application/json)
-
-        {
-            "data": [
-                {
-                    "title": "meeting",
-                    "participator": "test1",
-                    "startTime": "2017-01-01/12:00:00",
-                    "endTime": "2017-01-02/12:00:00"
-                }
-            ]
-            
-        }
-            
-+ Response 401 (application/json)
 
 ### Cancel Meeting [DELETE /api/meeting]
 
@@ -284,5 +238,53 @@ Agenda API
     + Body
     
             {}
+            
++ Response 401 (application/json)
+
+## Group Meetings [/api/meetings]
+
+### Show Meetings By Time [GET /api/meetings/{?startTime,endTime}]
+
++ Parameters
+    - startTime : `2017-01-01/12:00:00` (string, required) - Start Time
+    - endTime : `2017-01-02/12:00:00` (string, required) - End Time
+
++ Response 200 (application/json)
+
+        {
+            [
+                {
+                    "title": "meeting",
+                    "participator": "test1",
+                    "startTime": "2017-01-01/12:00:00",
+                    "endTime": "2017-01-02/12:00:00"
+                }
+            ]
+            
+        }
+            
++ Response 400 (application/json)
+
+        {
+            "msg": "Bad time"
+        }
+        
++ Response 401 (application/json)
+
+### Show All Meetings [GET /api/meetings]
+
++ Response 200 (application/json)
+
+        {
+            [
+                {
+                    "title": "meeting",
+                    "participator": "test1",
+                    "startTime": "2017-01-01/12:00:00",
+                    "endTime": "2017-01-02/12:00:00"
+                }
+            ]
+            
+        }
             
 + Response 401 (application/json)
