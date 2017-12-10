@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"os"
 )
 
 var (
@@ -18,6 +19,12 @@ var (
 	scheme = "http"
 	host   = "localhost:8080"
 )
+
+func init() {
+	if _, present := os.LookupEnv("MOCK"); present {
+		SetServer("https://private-ef9a4e-mensu.apiary-mock.com")
+	}
+}
 
 // SetServer ..
 func SetServer(serverURL string) (err error) {
