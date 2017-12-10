@@ -7,7 +7,7 @@
 ## 安装运行
 
 ```
-docker build . -t agenda
+docker pull mensu/agenda-cli-service-go
 # 服务端
 docker run -dit --name agenda-sevice -v $PATH_TO_SERVER_DATA:/data -p 8080:8080 agenda service
 # 客户端
