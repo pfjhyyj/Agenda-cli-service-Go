@@ -14,5 +14,5 @@ script:
   - go test -v ./service/vendor/entities
   - docker build . -t agenda
   - docker run -dit --name service -p 8080:8080 -v /data:/data agenda service
-  - docker logs service
+  - docker ps -a
   - docker run --rm --net host -v /data:/data agenda cli help
