@@ -27,4 +27,5 @@ func initRoutes(mx *mux.Router, formatter *render.Render) {
 	// Group User
 	mx.HandleFunc("/api/user/login", checkIsLoginHandler(formatter)).Methods("GET")
 	mx.HandleFunc("/api/user/login", loginHandler(formatter)).Methods("POST")
+	mx.HandleFunc("/api/user/logout", logoutHandler(formatter)).Methods("POST")
 }
