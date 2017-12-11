@@ -1,6 +1,6 @@
-# Agenda
+# Agenda Client & Service
 
-> 课程《服务计算》作业七：用 Go 实现 Agenda 客户端和服务端 RESTful API 交互
+> 课程《服务计算》作业七：用 Go 完成 Agenda 客户端和 RESTful API 服务端同步开发
 
 [![Build Status](https://travis-ci.org/Mensu/Agenda-cli-service-Go.svg?branch=master)](https://travis-ci.org/Mensu/Agenda-cli-service-Go)
 
@@ -40,7 +40,7 @@ curUser: data/curUser.json
 
 ### 团队协作
 
-- 团队成员从 master 的 ``master`` 分支 fork 出[新的仓库](https://github.com/pfjhyyj/Agenda-cli-service-go)进行需求开发
+- 团队成员从 master 的 ``master`` 分支 fork 出[新的仓库](https://github.com/pfjhyyj/Agenda-cli-service-go)负责 Agenda 客户端项目，与 master 的 RESTful 服务项目**同步开发**
 - 团队成员开发完毕，向 master 的 ``master`` 分支发起 ``Pull Request``，并邀请 master ``review``
 - master ``review`` 完觉得可以，且 ``CI`` 通过，方可确认归并代码
 - master 作为 master 开发时，不得直接向 ``master`` 分支 push commit。而应该同样通过另开分支的方式进行需求开发。开发完毕后，向 master 的 ``master`` 分支发起 ``Pull Request``，并邀请团队成员 ``review``。同样，团队成员 ``review`` 完觉得可以，且 ``CI`` 通过，方可确认归并代码
@@ -52,6 +52,8 @@ curUser: data/curUser.json
 - 从最开始的开发开始，**边开发边写对应的测试**，在一次次提交的过程中不断集成，减少新的改动破坏原有功能的可能性，为项目功能的稳定提供有力保障
 
 ### TODO
+
+...
 
 ## 架构设计与实现细节
 
