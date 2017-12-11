@@ -26,9 +26,6 @@ func TestSessionModel(t *testing.T) {
 }
 
 func TestSessionService(t *testing.T) {
-	// if err := service.Login("mockusername", "mockpassword"); err != nil {
-	// 	t.Fatal(err)
-	// }
 	if err := service.Logout(); err != nil {
 		t.Fatal(err)
 	}

@@ -13,16 +13,6 @@ type User struct {
 	Phone    string `json:"phone"`
 }
 
-type userModel struct {
-	storage
-	users []*User
-}
-
-var (
-	// UserModel model for users
-	UserModel userModel
-)
-
 // AddUser adds a new user
 func AddUser(user *User) (err error) {
 	logger.Println("[userentity] try performing add user request")
@@ -65,9 +55,4 @@ func FindAll() (users []User, err error) {
 	}
 	err = fmt.Errorf("%d", code)
 	return
-}
-
-// FindByUsername find user by username
-func (model *userModel) FindByUsername(username string) *User {
-	return &User{}
 }

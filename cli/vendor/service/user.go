@@ -12,7 +12,6 @@ func validateNewUser(user *entity.User) error {
 	if len(user.Password) == 0 {
 		return fmt.Errorf("password should not be empty")
 	}
-	// ...TODO
 	return nil
 }
 

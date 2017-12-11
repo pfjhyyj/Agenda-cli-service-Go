@@ -19,8 +19,6 @@ var listCmd = &cobra.Command{
 			for i, user := range results {
 				fmt.Printf("No. %d\n", i)
 				fmt.Printf("Username: %s\n", user.Username)
-				fmt.Printf("Email: %s\n", user.Email)
-				fmt.Printf("Phone: %s\n\n", user.Phone)
 			}
 		} else {
 			fmt.Fprintln(os.Stderr, "Error:", err)
