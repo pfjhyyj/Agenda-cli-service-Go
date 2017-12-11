@@ -24,7 +24,6 @@ func init() {
 	if _, present := os.LookupEnv("MOCK"); present {
 		SetServer("https://private-ef9a4e-mensu.apiary-mock.com")
 	}
-	SetServer("https://private-ef9a4e-mensu.apiary-mock.com")
 }
 
 // SetServer ..
