@@ -14,7 +14,7 @@ var quitMeetingCmd = &cobra.Command{
 	Long:  `quit a meeting by participator`,
 	Run: func(cmd *cobra.Command, args []string) {
 		title, _ := cmd.Flags().GetString("title")
-		err := service.DeleteFromMeeting(title)
+		err := service.QuitMeeting(title)
 		if err == nil {
 			fmt.Printf("Quited the meeting %s\n", title)
 		} else {

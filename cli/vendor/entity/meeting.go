@@ -1,5 +1,9 @@
 package entity
 
+import (
+	"utils"
+)
+
 // Meeting model for one meeting
 type Meeting struct {
 	Title         string   `json:"tile"`
@@ -9,103 +13,84 @@ type Meeting struct {
 	EndTime       string   `json:"endTime"`
 }
 
-type meetingDb struct {
-	Data []Meeting `json:"data"`
-}
-
-type meetingModel struct {
-	storage
-	meetings map[string]*Meeting
-}
-
-var (
-	// MeetingModel for meetings
-	MeetingModel meetingModel
-)
-
-func init() {
-	// addModel(&MeetingModel, "meeting_data")
-}
-
-// Init initialize a meeting model
-func (model *meetingModel) Init(path string) {
-	logger.Println("[meetingmodel] initializing")
-	model.path = path
-	model.meetings = make(map[string]*Meeting)
-
-	model.load()
-	logger.Println("[meetingmodel] initialized")
-}
-
-// Addmeeting add a new meeting to database
-func (model *meetingModel) AddMeeting(meeting *Meeting) {
+// AddMeeting add a new meeting to database
+func AddMeeting(meeting *Meeting, err error) {
 	logger.Println("[meetingmodel] try adding new meeting", meeting.Title)
-	model.meetings[meeting.Title] = meeting
-	model.dump()
-	logger.Println("[meetingmodel] added new meeting", meeting.Title)
+	var code int
+	var resBody struct {
+		Msg string `json:"msg"`
+	}
+	if code, err = request("POST", "/api/meetings", meeting, &resBody); err != nil {
+		return
+	}
+	err = utils.HTTPErrorHandler(code, resBody.Msg)
+	return
 }
 
 // AddParticipatorToMeeting Add a Participator To Meeting
-func (model *meetingModel) AddParticipatorToMeeting(meeting *Meeting, participator string) {
-	logger.Println("[meetingmodel] try adding a participator to meeting", meeting.Title)
-	curMeetingParticipators := model.meetings[meeting.Title].Participators
-	model.meetings[meeting.Title].Participators = append(curMeetingParticipators, participator)
-	model.dump()
-	logger.Println("[meetingmodel] added a participator to meeting", meeting.Title)
-}
-
-// FindMeetingCondition filter function to query meeting
-type FindMeetingCondition func(*Meeting) bool
-
-// FindBy find meetingList with provided condition
-func (model *meetingModel) FindBy(condition FindMeetingCondition) []Meeting {
-	result := []Meeting{}
-	for _, meeting := range model.meetings {
-		if condition(meeting) {
-			result = append(result, *meeting)
-		}
+func AddParticipatorToMeeting(title string, participator string, err error) {
+	logger.Println("[meetingmodel] try adding a participator to meeting", title)
+	var code int
+	var reqBody struct {
+		Participators string `json:"participators"`
 	}
-	return result
-}
-
-// FindByTitle find meeting by meetingname
-func (model *meetingModel) FindByTitle(meetingname string) *Meeting {
-	return model.meetings[meetingname]
-}
-
-func (model *meetingModel) DeleteMeeting(meeting *Meeting) {
-	logger.Println("[meetingmodel] try deleting a meeting", meeting.Title)
-	delete(model.meetings, meeting.Title)
-	model.dump()
-	logger.Println("[meetingmodel] deleted a meeting", meeting.Title)
-}
-
-func (model *meetingModel) DeleteParticipatorFromMeeting(meeting *Meeting, participator string) {
-	logger.Println("[meetingmodel] try deleting a participator from meeting", meeting.Title)
-	curMeetingParticipators := model.meetings[meeting.Title].Participators
-	for i, p := range curMeetingParticipators {
-		if p == participator {
-			curMeetingParticipators = append(curMeetingParticipators[:i], curMeetingParticipators[i+1:]...)
-			break
-		}
+	reqBody.Participators = participator
+	var resBody struct {
+		Msg string `json:"msg"`
 	}
-	model.meetings[meeting.Title].Participators = curMeetingParticipators
-	model.dump()
-	logger.Println("[meetingmodel] deleted a participator from meeting", meeting.Title)
+
+	if code, err = request("POST", "/api/meetings/"+title+"/participators", reqBody, &resBody); err != nil {
+		return
+	}
+	err = utils.HTTPErrorHandler(code, resBody.Msg)
+	return
 }
 
-func (model *meetingModel) load() {
-	var meetingDb meetingDb
-	model.storage.load(&meetingDb)
-	for index, meeting := range meetingDb.Data {
-		model.meetings[meeting.Title] = &meetingDb.Data[index]
+// FindMeetingsByTime find meetings by time interval
+func FindMeetingsByTime(startTime string, endTime string, err error) []Meeting {
+	var code int
+	var resBody []Meeting
+	if code, err = request("GET", "/api/meetings"+"?startTime="+startTime+"&endTime="+endTime,
+		nil, &resBody); err != nil {
+		return nil
 	}
+	err = utils.HTTPErrorHandler(code, "")
+	if err != nil {
+		return nil
+	}
+	return resBody
 }
 
-func (model *meetingModel) dump() {
-	var meetingDb meetingDb
-	for _, meeting := range model.meetings {
-		meetingDb.Data = append(meetingDb.Data, *meeting)
+// DeleteMeeting delete an existed meeting
+func DeleteMeeting(title string, err error) {
+	logger.Println("[meetingmodel] try deleting a meeting", title)
+	var code int
+	var resBody struct {
+		Msg string `json:"msg"`
 	}
-	model.storage.dump(&meetingDb)
+
+	if code, err = request("DELETE", "/api/meetings/"+title, nil, &resBody); err != nil {
+		return
+	}
+	err = utils.HTTPErrorHandler(code, resBody.Msg)
+	return
+}
+
+// DeleteParticipatorFromMeeting delete a participator from meeting
+func DeleteParticipatorFromMeeting(title string, participator string, err error) {
+	logger.Println("[meetingmodel] try deleting a participator from meeting", title)
+	var reqBody struct {
+		Participators string `json:"participators"`
+	}
+	reqBody.Participators = participator
+	var code int
+	var resBody struct {
+		Msg string `json:"msg"`
+	}
+
+	if code, err = request("DELETE", "/api/meetings/"+title+"/participators", reqBody, &resBody); err != nil {
+		return
+	}
+	err = utils.HTTPErrorHandler(code, resBody.Msg)
+	return
 }

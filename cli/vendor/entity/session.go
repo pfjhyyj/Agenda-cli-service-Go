@@ -51,16 +51,6 @@ func (model *sessionModel) GetCurOpenid() string {
 	return model.session.Openid
 }
 
-// GetCurUser is kept for compilation
-func (model *sessionModel) GetCurUser() string {
-	return ""
-}
-
-// SetCurUser is kept for compilation
-func (model *sessionModel) SetCurUser() {
-	return
-}
-
 func (model *sessionModel) load() {
 	var sessionDb sessionDb
 	model.storage.load(&sessionDb)
