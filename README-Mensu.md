@@ -11,5 +11,6 @@
 - [``679c8cbf81``](https://github.com/Mensu/Agenda-cli-service-Go/commit/679c8cbf81) [service] 初步完成用户登出API
 - [``d3d517bb36``](https://github.com/Mensu/Agenda-cli-service-Go/commit/d3d517bb36) [service] [service] 初步完成删除用户账户的API
 - [``a22a422456``](https://github.com/Mensu/Agenda-cli-service-Go/commit/a22a422456) [service] 初步完成用户注册的API
+- [``2658441b00``](https://github.com/Mensu/Agenda-cli-service-Go/commit/2658441b00) [service] 完善 user API 的单元测试
 
 # 项目小结
