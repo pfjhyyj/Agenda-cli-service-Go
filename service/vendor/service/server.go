@@ -24,5 +24,7 @@ func NewServer() *negroni.Negroni {
 }
 
 func initRoutes(mx *mux.Router, formatter *render.Render) {
-
+	// Group User
+	mx.HandleFunc("/api/user/login", checkIsLoginHandler(formatter)).Methods("GET")
+	mx.HandleFunc("/api/user/login", loginHandler(formatter)).Methods("POST")
 }
