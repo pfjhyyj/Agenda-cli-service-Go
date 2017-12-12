@@ -10,8 +10,25 @@ services:
   - docker
 
 script:
+  # mock 测试
   - export MOCK= && go test -v ./cli/vendor/service
+  # 服务端测试
   - go test -v ./service/vendor/entities
+  # 镜像构建测试
   - docker build . -t agenda
-  - docker run -dit --name service -p 8080:8080 -v /data:/data agenda service
-  - docker run --rm --network host -v /data:/data agenda cli help
+  # 综合测试
+  # 运行镜像里的服务端
+  - docker run -dit --name service -p 8080:8080 -v /service_data:/data agenda service
+  # 等待服务端启动
+  - sleep 2
+  - docker ps -a
+  - docker logs service
+  # 用镜像里的客户端测试注册
+  - docker run --rm --net host -v /cli_data:/data agenda cli register -u agenda -p agenda -m agenda@service.computing.com -n 12345678909
+  # 用镜像里的客户端测试登录
+  - docker run --rm --net host -v /cli_data:/data agenda cli login -u agenda -p agenda
+  # 用镜像里的客户端测试登出
+  - docker run --rm --net host -v /cli_data:/data agenda cli logout
+  # 用镜像里的客户端测试删除用户
+  - docker run --rm --net host -v /cli_data:/data agenda cli login -u agenda -p agenda
+  - docker run --rm --net host -v /cli_data:/data agenda cli delete-account
